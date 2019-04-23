@@ -1,4 +1,6 @@
 <script>
+  import Type from "./Type.svelte";
+
   export let pokemon;
   $: types = pokemon.types.map(({type: {name}}) => name)
 </script>
@@ -27,7 +29,7 @@
       <div class="content">
         <div class="tags">
           {#each types as type}
-            <span class="tag is-light">{type}</span>
+            <Type {type} />
           {/each}
         </div>
       </div>
