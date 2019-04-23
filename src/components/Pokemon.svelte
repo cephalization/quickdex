@@ -1,12 +1,17 @@
 <script>
   import Search from "./Search.svelte";
+  import DexEntry from "./DexEntry.svelte";
+  import EmptyEntry from "./EmptyEntry.svelte";
+
   import { pokemon } from "../stores.js";
 
   let pokemonData;
 
   pokemon.subscribe(data => {
     pokemonData = data;
+    console.log(data);
   });
+  $: component = pokemonData !== null ? DexEntry : EmptyEntry;
 </script>
 
 <style>
@@ -18,9 +23,6 @@
 <div class="container">
 	<Search />
 	<section class="section data-container">
-		<!-- Display Pokémon's data if it exists -->
-    {
-      JSON.stringify(pokemonData)
-    }
+    <svelte:component this={component} pokemon={pokemonData} />
 	</section>
 </div>
