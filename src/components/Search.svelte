@@ -4,7 +4,7 @@
   let query = "";
 
   function onEnter(event) {
-    if (event.key !== "Enter") return;
+    if (event.key !== "Enter" || !query.length) return;
     getPokemon(query);
   }
 </script>

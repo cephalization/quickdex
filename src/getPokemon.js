@@ -1,19 +1,29 @@
 import {pokemon} from "./stores";
 
+const pokemonQuery = query => `https://pokeapi.co/api/v2/pokemon/${query}`;
+
 export const getPokemon = async (query) => {
-  if (!query.length) {
-    return false
-  };
-
-  const URI = `https://pokeapi.co/api/v2/pokemon/${query}`;
-
   try {
-    const response = await fetch(URI);
+    const response = await fetch(pokemonQuery(query));
+    const primaryPokemon = await response.json();
 
-    const data = await response.json();
+    const index = primaryPokemon.id;
 
-    pokemon.set(data);
+    let previousPokemon = null;
+    let nextPokemon = null;
+
+    if (index > 1) {
+      const prevResponse = await fetch(pokemonQuery(index - 1));
+      previousPokemon = await prevResponse.json();
+    }
+
+    if (index < 807) {
+      const nextResponse = await fetch(pokemonQuery(index + 1));
+      nextPokemon = await nextResponse.json();
+    }
+
+    pokemon.set({primaryPokemon, previousPokemon, nextPokemon});
   } catch (e) {
-    return new Error(`Could not fetch pokemon! ${e}`);
+    console.error(new Error(`Could not fetch pokemon! ${e}`));
   }
 }
