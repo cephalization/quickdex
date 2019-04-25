@@ -3,6 +3,8 @@ import {pokemon} from "./stores";
 const pokemonQuery = query => `https://pokeapi.co/api/v2/pokemon/${query}`;
 
 export const getPokemon = async (query) => {
+  pokemon.update(p => ({...p, loading: true}));
+
   try {
     const response = await fetch(pokemonQuery(query));
     const primaryPokemon = await response.json();
@@ -25,5 +27,7 @@ export const getPokemon = async (query) => {
     pokemon.set({primaryPokemon, previousPokemon, nextPokemon});
   } catch (e) {
     console.error(new Error(`Could not fetch pokemon! ${e}`));
+  } finally {
+    pokemon.update(p => ({...p, loading: false}));
   }
 }
