@@ -19,7 +19,7 @@
 {#if pokemon != null}
   <button class="button is-text" on:click={get}>
     {`#${pokemon.id} ${pokemon.name}`}
-    <figure class="image is-48x48 is-pulled-left">
+    <figure class="image is-32x32 is-pulled-left">
         <img src={pokemon.sprites.front_default} alt={pokemon.name}>
     </figure>
   </button>

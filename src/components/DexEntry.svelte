@@ -39,6 +39,10 @@
   .card-footer-item {
     padding: 0;
   }
+
+  .media-left {
+    margin-right: 0;
+  }
 </style>
 
 <div class={`column is-half is-offset-3`}>
