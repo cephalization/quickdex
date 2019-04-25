@@ -1,4 +1,6 @@
 <script>
+	import Error from "./Error.svelte";
+
   import { getPokemon } from "../getPokemon";
   import { pokemon } from "../stores";
 
@@ -28,13 +30,16 @@
 
 <section class="section">
 	<div class="columns">
-    <div class="field has-addons column is-6 is-offset-3">
-       <div class="control is-expanded">
-         <input disabled={loading} on:keydown={onEnter} bind:value={query} class="input" type="text" placeholder="Search by name, e.g. 'Bulbasaur'">
+    <div class="column is-6 is-offset-3">
+      <div class="field has-addons">
+         <div class="control is-expanded">
+           <input disabled={loading} on:keydown={onEnter} bind:value={query} class="input" type="text" placeholder="Search by name, e.g. 'Bulbasaur'">
+         </div>
+         <div class="control">
+           <button disabled={!query.length || loading} class={`button is-info ${loading ? "is-loading" : ""}`} type="button" on:click={search}>Search</button>
+         </div>
        </div>
-       <div class="control">
-         <button disabled={!query.length || loading} class={`button is-info ${loading ? "is-loading" : ""}`} type="button" on:click={search}>Search</button>
-       </div>
-     </div>
+       <Error />
+    </div>
   </div>
 </section>

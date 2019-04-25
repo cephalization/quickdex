@@ -6,3 +6,5 @@ export const pokemon = writable({
   nextPokemon: null,
   loading: false
 });
+
+export const error = writable(null);

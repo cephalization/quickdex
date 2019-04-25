@@ -1,4 +1,4 @@
-import {pokemon} from "./stores";
+import {pokemon, error} from "./stores";
 
 const pokemonQuery = query => `https://pokeapi.co/api/v2/pokemon/${query}`;
 
@@ -25,9 +25,11 @@ export const getPokemon = async (query) => {
     }
 
     pokemon.set({primaryPokemon, previousPokemon, nextPokemon});
+    error.set(null)
   } catch (e) {
-    console.error(new Error(`Could not fetch pokemon! ${e}`));
+      error.set(`Could not get Pokémon, ${query}`);
+      setTimeout(() => {error.set(null)}, 2000)
   } finally {
-    pokemon.update(p => ({...p, loading: false}));
+      pokemon.update(p => ({...p, loading: false}));
   }
 }
