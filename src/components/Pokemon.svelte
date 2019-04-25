@@ -18,10 +18,6 @@
 	.data-container {
 	  min-height: 40vh;
 	}
-
-  .container {
-    background-color: white;
-  }
 </style>
 
 <div class="container">
