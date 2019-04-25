@@ -5,34 +5,30 @@
 
   import { pokemon } from "../stores.js";
 
-  let primaryPokemon;
-  let previousPokemon;
-  let nextPokemon;
+  let pokemonGroup;
 
   pokemon.subscribe(data => {
-    primaryPokemon = data.primaryPokemon;
-    previousPokemon = data.previousPokemon;
-    nextPokemon = data.nextPokemon;
+    pokemonGroup = data;
   });
 
-  $: primaryPokemonComponent = primaryPokemon != null ? DexEntry : EmptyEntry;
-  $: previousPokemonComponent = previousPokemon != null ? DexEntry : EmptyEntry;
-  $: nextPokemonComponent = nextPokemon != null ? DexEntry : EmptyEntry;
+  $: primaryPokemonComponent = pokemonGroup.primaryPokemon != null ? DexEntry : EmptyEntry;
 </script>
 
 <style>
 	.data-container {
 	  min-height: 40vh;
 	}
+
+  .container {
+    background-color: white;
+  }
 </style>
 
 <div class="container">
 	<Search />
 	<section class="section data-container">
     <div class="columns">
-      <svelte:component this={previousPokemonComponent} pokemon={previousPokemon} />
-      <svelte:component this={primaryPokemonComponent} isPrimary={true} pokemon={primaryPokemon} />
-      <svelte:component this={nextPokemonComponent} pokemon={nextPokemon} />
+      <svelte:component this={primaryPokemonComponent} isPrimary={true} {pokemonGroup} />
     </div>
 	</section>
 </div>

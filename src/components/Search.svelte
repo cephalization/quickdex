@@ -14,6 +14,12 @@
   }
 </script>
 
+<style>
+  section {
+    padding: 3rem 1.5rem 0 1.5rem;
+  }
+</style>
+
 <section class="section">
 	<div class="columns">
     <div class="field has-addons column is-6 is-offset-3">
