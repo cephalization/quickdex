@@ -8,6 +8,6 @@ const app = new App({
 
 window.app = app;
 
-getPokemon(1)
+getPokemon(1);
 
 export default app;

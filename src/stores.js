@@ -4,7 +4,8 @@ export const pokemon = writable({
   primaryPokemon: null,
   previousPokemon: null,
   nextPokemon: null,
-  loading: false
+  loading: false,
+  allNames: []
 });
 
 export const error = writable(null);
