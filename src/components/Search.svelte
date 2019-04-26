@@ -10,10 +10,10 @@
   let focused = false;
   let dropdownOpen = false;
 
-  function search() {
+  function search(autocompleted = false) {
     if (!query.length || !names.length) return;
 
-    if (names.length >= 1) query = names[0];
+    if (!autocompleted && names.length >= 1) query = names[0];
 
     focused = false;
     getPokemon(query);
@@ -26,7 +26,7 @@
 
   function onAutoCompleteClick(pokemon) {
     query = pokemon;
-    search();
+    search(true);
   }
 
   function openDropdown() {
