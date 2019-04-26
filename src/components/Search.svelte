@@ -13,28 +13,32 @@
   function search(autocompleted = false) {
     if (!query.length || !names.length) return;
 
-    if (!autocompleted && names.length >= 1) query = names[0];
+    if (autocompleted === false && names.length >= 1) query = names[0];
 
+    document.body.removeEventListener("click", closeDropdown);
     focused = false;
     getPokemon(query);
   }
 
   function onEnter(event) {
     if (event.key !== "Enter") return;
+    event.target.blur();
     search();
   }
 
-  function onAutoCompleteClick(pokemon) {
+  function onAutoCompleteClick(e, pokemon) {
+    e.stopPropagation();
     query = pokemon;
     search(true);
   }
 
-  function openDropdown() {
+  function openDropdown(e) {
+    e.stopPropagation();
     focused = true;
+    document.body.addEventListener("click", closeDropdown);
   }
 
   function closeDropdown(e) {
-    if (e.relatedTarget && e.relatedTarget.id.includes("_button")) return;
     focused = false;
   }
 
@@ -82,9 +86,10 @@
       <div class="field has-addons">
          <div class="control is-expanded">
            <input
+            tabindex="0"
             disabled={loading}
+            on:click={(e) => {e.stopPropagation()}}
             on:focus={openDropdown}
-            on:blur={closeDropdown}
             on:keydown={onEnter}
             bind:value={query}
             class="input"
@@ -93,7 +98,7 @@
           >
          </div>
          <div class="control">
-           <button disabled={!query.length || !names.length || loading} class={`button is-info ${loading ? "is-loading" : ""}`} type="button" on:click={search}>Search</button>
+           <button disabled={!query.length || !names.length || loading} class={`button is-info ${loading ? "is-loading" : ""}`} type="button" on:click={() => search(false)}>Search</button>
          </div>
        </div>
        <Error />
@@ -107,8 +112,9 @@
              {#each names as name, i }
               <button
                 type="button"
+                tabindex="0"
                 class={`button dropdown-item is-text is-size-5 ${!i ? "underlined" : ""}`}
-                on:click={() => onAutoCompleteClick(name)}
+                on:click={(e) => onAutoCompleteClick(e, name)}
                 id={`${name}_button`}
               >
                 {name}
