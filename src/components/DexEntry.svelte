@@ -12,11 +12,11 @@
   let nextPokemon;
   let previousPokemon;
 
-  $: types = pokemon.types.map(({type: {name}}) => name)
-  $: id = pokemon.id;
   $: pokemon = pokemonGroup.primaryPokemon;
   $: nextPokemon = pokemonGroup.nextPokemon;
   $: previousPokemon = pokemonGroup.previousPokemon;
+  $: types = pokemon.types.map(({type: {name}}) => name)
+  $: id = pokemon.id;
 </script>
 
 <style>

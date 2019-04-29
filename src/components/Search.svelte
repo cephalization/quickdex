@@ -27,9 +27,9 @@
     search();
   }
 
-  function onAutoCompleteClick(e, pokemon) {
+  function onAutoCompleteClick(e, pokemonQuery) {
     e.stopPropagation();
-    query = pokemon;
+    query = pokemonQuery;
     search(true);
   }
 
@@ -43,11 +43,7 @@
     focused = false;
   }
 
-  let loading = false;
-  pokemon.subscribe(data => {
-    loading = data.loading;
-  })
-
+  $: loading = $pokemon.loading;
   $: names = query.length && pokemonNames.filter(name => name.startsWith(query.toLowerCase()))
   $: dropdownOpen = focused && query.length;
 </script>
@@ -91,7 +87,7 @@
     <div class="column is-offset-3 is-6">
         <AutocompleteDropdown
           open={dropdownOpen}
-          onAutoCompleteClick="{(e, pokemon) => onAutoCompleteClick(e, pokemon)}"
+          onAutoCompleteClick="{(e, pokemonQuery) => onAutoCompleteClick(e, pokemonQuery)}"
           items={names}
           inputValue={query}
         />

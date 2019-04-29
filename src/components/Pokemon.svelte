@@ -5,13 +5,7 @@
 
   import { pokemon } from "../stores.js";
 
-  let pokemonGroup;
-
-  pokemon.subscribe(data => {
-    pokemonGroup = data;
-  });
-
-  $: primaryPokemonComponent = pokemonGroup.primaryPokemon != null ? DexEntry : EmptyEntry;
+  $: primaryPokemonComponent = $pokemon.primaryPokemon != null ? DexEntry : EmptyEntry;
 </script>
 
 <style>
@@ -24,7 +18,7 @@
 	<Search />
 	<section class="section data-container">
     <div class="columns">
-      <svelte:component this={primaryPokemonComponent} isPrimary={true} {pokemonGroup} />
+      <svelte:component this={primaryPokemonComponent} isPrimary={true} pokemonGroup={$pokemon} />
     </div>
 	</section>
 </div>
